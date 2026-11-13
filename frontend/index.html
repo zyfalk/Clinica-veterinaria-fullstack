@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetCare - Sistema de Clínica Veterinária</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <div class="brand">
+                <div class="brand-icon">🐾</div>
+                <div>
+                    <h1>VetCare Clínica Veterinária</h1>
+                    <p>Sistema de Gestão Clínica e Prontuário Animal</p>
+                </div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="nav-btn active" onclick="navegarPara('painel')" id="tab-painel">Painel Geral</button>
+                <button class="nav-btn" onclick="navegarPara('animais')" id="tab-animais">Cadastro de Animais</button>
+                <button class="nav-btn" onclick="navegarPara('servicos')" id="tab-servicos">Registro de Serviços</button>
+                <button class="nav-btn" onclick="navegarPara('historico')" id="tab-historico">Histórico por Animal</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <div id="alerta-status" class="alerta hidden"></div>
+
+        <section id="secao-painel" class="aba-secao">
+            <div class="section-header">
+                <div>
+                    <h2>Visão Geral da Clínica</h2>
+                    <p>Acompanhamento de pacientes, procedimentos clínicos e faturamento.</p>
+                </div>
+                <span class="status-api" id="indicador-api">● Sistema Ativo</span>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-label">Animais Cadastrados</span>
+                    <strong class="kpi-value" id="kpi-total-animais">0</strong>
+                    <span class="kpi-sub">Pacientes ativos no sistema</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Serviços Realizados</span>
+                    <strong class="kpi-value" id="kpi-total-servicos">0</strong>
+                    <span class="kpi-sub">Consultas, exames, vacinas e cirurgias</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Receita Acumulada</span>
+                    <strong class="kpi-value" id="kpi-faturamento">R$ 0,00</strong>
+                    <span class="kpi-sub">Total bruto de serviços clínicos</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Ticket Médio</span>
+                    <strong class="kpi-value" id="kpi-ticket-medio">R$ 0,00</strong>
+                    <span class="kpi-sub">Média financeira por procedimento</span>
+                </div>
+            </div>
+
+            <div class="card mt-20">
+                <div class="card-header-flex">
+                    <h3>Últimos Procedimentos Registrados</h3>
+                    <button class="btn btn-outline" onclick="navegarPara('servicos')">+ Novo Atendimento</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Animal</th>
+                                <th>Tutor</th>
+                                <th>Tipo de Serviço</th>
+                                <th>Veterinário Responsável</th>
+                                <th>Valor</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-ultimos-servicos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="secao-animais" class="aba-secao hidden">
+            <div class="section-header">
+                <div>
+                    <h2>Cadastro de Animais</h2>
+                    <p>Registre novos animais e mantenha os dados de seus tutores atualizados.</p>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <h3>Novo Cadastro de Animal</h3>
+                    <form id="form-animal" onsubmit="salvarAnimal(event)">
+                        <div class="form-group">
+                            <label for="animal-nome">Nome do Animal *</label>
+                            <input type="text" id="animal-nome" required placeholder="Ex.: Thor, Luna, Max">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="animal-especie">Espécie *</label>
+                                <select id="animal-especie" required>
+                                    <option value="Canina">Canina</option>
+                                    <option value="Felina">Felina</option>
+                                    <option value="Ave">Ave</option>
+                                    <option value="Silvestre">Silvestre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="animal-raca">Raça *</label>
+                                <input type="text" id="animal-raca" required placeholder="Ex.: Golden Retriever, Siamês">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="animal-idade">Idade em anos *</label>
+                                <input type="number" id="animal-idade" min="0" max="40" required placeholder="Ex.: 4">
+                            </div>
+                            <div class="form-group">
+                                <label for="animal-peso">Peso em kg *</label>
+                                <input type="number" id="animal-peso" step="0.1" min="0.1" required placeholder="Ex.: 12.5">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="animal-tutor">Nome do Tutor *</label>
+                            <input type="text" id="animal-tutor" required placeholder="Ex.: Carlos Eduardo Mendes">
+                        </div>
+                        <div class="form-group">
+                            <label for="animal-telefone">Telefone do Tutor *</label>
+                            <input type="text" id="animal-telefone" required placeholder="Ex.: (27) 99812-4410">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Salvar Cadastro do Animal</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header-flex">
+                        <h3>Animais Cadastrados</h3>
+                        <input type="text" id="busca-animal" class="input-busca" placeholder="Buscar animal ou tutor..." oninput="filtrarTabelaAnimais()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Animal</th>
+                                    <th>Espécie / Raça</th>
+                                    <th>Idade / Peso</th>
+                                    <th>Tutor e Contato</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-animais"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="secao-servicos" class="aba-secao hidden">
+            <div class="section-header">
+                <div>
+                    <h2>Registro de Serviços Realizados</h2>
+                    <p>Lance consultas, exames laboratoriais, vacinações, cirurgias e retornos vinculados ao animal.</p>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <h3>Lançar Novo Serviço</h3>
+                    <form id="form-servico" onsubmit="salvarServico(event)">
+                        <div class="form-group">
+                            <label for="servico-animal">Selecione o Animal *</label>
+                            <select id="servico-animal" required></select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="servico-tipo">Tipo de Serviço *</label>
+                                <select id="servico-tipo" required>
+                                    <option value="Consulta Clínica">Consulta Clínica</option>
+                                    <option value="Vacinação">Vacinação</option>
+                                    <option value="Exame Laboratorial">Exame Laboratorial</option>
+                                    <option value="Exame de Imagem">Exame de Imagem</option>
+                                    <option value="Cirurgia">Cirurgia</option>
+                                    <option value="Consulta Dermatológica">Consulta Dermatológica</option>
+                                    <option value="Retorno">Retorno</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="servico-data">Data de Realização *</label>
+                                <input type="date" id="servico-data" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="servico-veterinario">Veterinário Responsável *</label>
+                                <input type="text" id="servico-veterinario" required placeholder="Ex.: Dra. Camila Rocha">
+                            </div>
+                            <div class="form-group">
+                                <label for="servico-valor">Valor Cobrado *</label>
+                                <input type="number" id="servico-valor" step="0.01" min="0" required placeholder="Ex.: 150.00">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="servico-obs">Observações Clínicas</label>
+                            <textarea id="servico-obs" rows="3" placeholder="Descreva os procedimentos realizados, sintomas ou prescrições..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Registrar Serviço</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>Histórico Geral de Atendimentos</h3>
+                    <div class="table-responsive">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Animal</th>
+                                    <th>Serviço</th>
+                                    <th>Veterinário</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-todos-servicos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="secao-historico" class="aba-secao hidden">
+            <div class="section-header">
+                <div>
+                    <h2>Consulta de Histórico de Serviços por Animal</h2>
+                    <p>Selecione um animal para visualizar sua ficha cadastral e todos os procedimentos realizados.</p>
+                </div>
+            </div>
+
+            <div class="card filtro-historico-box">
+                <div class="filtro-row">
+                    <div class="form-group flex-1">
+                        <label for="filtro-historico-animal">Selecionar Animal para Consulta:</label>
+                        <select id="filtro-historico-animal" onchange="carregarHistoricoAnimal(this.value)"></select>
+                    </div>
+                    <button class="btn btn-outline" onclick="window.print()">Imprimir Histórico</button>
+                </div>
+            </div>
+
+            <div id="painel-prontuario" class="mt-20">
+                <div class="ficha-paciente card">
+                    <div class="ficha-grid">
+                        <div>
+                            <span class="ficha-label">Animal</span>
+                            <strong id="pront-nome">-</strong>
+                        </div>
+                        <div>
+                            <span class="ficha-label">Espécie / Raça</span>
+                            <strong id="pront-especie-raca">-</strong>
+                        </div>
+                        <div>
+                            <span class="ficha-label">Idade / Peso</span>
+                            <strong id="pront-idade-peso">-</strong>
+                        </div>
+                        <div>
+                            <span class="ficha-label">Tutor Responsável</span>
+                            <strong id="pront-tutor">-</strong>
+                        </div>
+                        <div>
+                            <span class="ficha-label">Total de Atendimentos</span>
+                            <strong id="pront-total-atend" class="destaque-azul">0</strong>
+                        </div>
+                        <div>
+                            <span class="ficha-label">Total em Serviços</span>
+                            <strong id="pront-total-valor" class="destaque-verde">R$ 0,00</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-20">
+                    <h3>Serviços Realizados no Animal</h3>
+                    <div class="table-responsive">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Tipo de Serviço</th>
+                                    <th>Veterinário Responsável</th>
+                                    <th>Observações Clínicas</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-historico-animal"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>VetCare Clínica Veterinária - Sistema Web de Gestão Clínica</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

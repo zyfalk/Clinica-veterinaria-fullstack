@@ -1,0 +1,419 @@
+:root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --primary-light: #ccfbf1;
+    --secondary: #1e293b;
+    --bg-page: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --success: #15803d;
+    --radius: 10px;
+    --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.topbar {
+    background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+    color: #ffffff;
+    padding: 16px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.14);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.brand h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.brand p {
+    font-size: 0.82rem;
+    color: #cbd5e1;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.nav-btn.active {
+    background: #14b8a6;
+    color: #042f2e;
+    border-color: #14b8a6;
+}
+
+.main-content {
+    flex: 1;
+    padding-top: 26px;
+    padding-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.section-header h2 {
+    font-size: 1.4rem;
+    color: var(--secondary);
+}
+
+.section-header p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.status-api {
+    background: #dcfce7;
+    color: #166534;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.kpi-card {
+    background: var(--bg-card);
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary);
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.kpi-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--secondary);
+    margin: 6px 0 4px;
+}
+
+.kpi-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.grid-2col {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 920px) {
+    .grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 14px;
+    color: var(--secondary);
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 13px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #334155;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #ffffff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.input-busca {
+    max-width: 240px;
+}
+
+.btn {
+    padding: 9px 15px;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-outline {
+    background: #f8fafc;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary-light);
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+}
+
+.tabela th {
+    text-align: left;
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+}
+
+.tabela td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.tabela tr:hover td {
+    background-color: #f8fafc;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-cirurgia {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.badge-vacina {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-exame {
+    background: #f3e8ff;
+    color: #7e22ce;
+}
+
+.filtro-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.flex-1 {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.ficha-paciente {
+    background: linear-gradient(to right, #ffffff, #f0fdfa);
+    border-left: 5px solid var(--primary);
+}
+
+.ficha-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+}
+
+.ficha-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.ficha-grid strong {
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+.destaque-azul {
+    color: #0369a1 !important;
+    font-size: 1.15rem !important;
+}
+
+.destaque-verde {
+    color: var(--success) !important;
+    font-size: 1.15rem !important;
+}
+
+.alerta {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.footer {
+    background: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 16px 0;
+    font-size: 0.82rem;
+    margin-top: auto;
+}
